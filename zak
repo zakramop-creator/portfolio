@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zakaria Amrouche</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f8f8f6;
+    --surface2: #f0efe9;
+    --border: rgba(0,0,0,0.08);
+    --text: #111111;
+    --muted: #666;
+    --accent: #f97316;
+    --accent2: #ea6c0a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; justify-content: center; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 2rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 4rem;
+  }
+
+  .hero-text { flex: 1; }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(249,115,22,0.1);
+    color: #c2580a;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    border: 1px solid rgba(249,115,22,0.25);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-photo {
+    width: 260px;
+    height: 320px;
+    border-radius: 16px;
+    object-fit: cover;
+    object-position: center top;
+    border: 3px solid var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .stat { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.2rem; }
+
+  /* SECTIONS */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 560px;
+    margin-bottom: 3rem;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(249,115,22,0.3), transparent);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* VENTURES */
+  .ventures-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .venture-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .venture-card:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-2px); }
+
+  .venture-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .venture-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; }
+
+  .venture-lesson {
+    background: rgba(249,115,22,0.07);
+    border-left: 2px solid var(--accent);
+    padding: 0.6rem 0.8rem;
+    font-size: 0.82rem;
+    color: #c2580a;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .venture-lesson strong { color: var(--accent); }
+
+  /* PROOF */
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .proof-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .proof-card:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
+
+  .proof-card-body { padding: 0.9rem 1rem; }
+  .proof-card-title { font-weight: 600; font-size: 0.9rem; color: var(--text); margin: 0; }
+  .proof-card-sub { font-size: 0.8rem; color: var(--muted); margin: 0.2rem 0 0; }
+
+  /* SCORE BADGES */
+  .score-badge { padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
+  .score-good { background: rgba(22,163,74,0.1); color: #15803d; border: 1px solid rgba(22,163,74,0.25); }
+  .score-poor { background: rgba(220,38,38,0.1); color: #b91c1c; border: 1px solid rgba(220,38,38,0.25); }
+
+  /* ARTICLE ROWS */
+  .article-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    transition: border-color 0.2s, transform 0.2s;
+    margin-bottom: 0.8rem;
+  }
+
+  .article-row:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-1px); }
+  .article-row-title { font-weight: 600; font-size: 0.95rem; color: var(--text); margin: 0; }
+  .article-row-sub { font-size: 0.82rem; color: var(--muted); margin: 0.3rem 0 0; }
+
+  /* VSL */
+  .vsl-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* FLOAT BUTTONS */
+  .float-btn {
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.4rem;
+    border-radius: 100px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .float-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.18); }
+  .float-call { top: 5rem; right: 1.5rem; background: var(--accent); color: white; }
+  .float-whatsapp { bottom: 1.5rem; left: 1.5rem; background: #25D366; color: white; }
+  .float-email { bottom: 1.5rem; right: 1.5rem; background: var(--text); color: white; }
+
+  /* MODAL */
+  #siteModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .modal-inner {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .modal-header span { font-weight: 600; font-size: 0.95rem; color: #111; }
+  .modal-header a { font-size: 0.82rem; color: var(--accent); text-decoration: none; font-weight: 600; }
+  .modal-header button { background: #f3f4f6; border: none; border-radius: 8px; padding: 0.4rem 0.8rem; cursor: pointer; font-size: 0.9rem; color: #444; }
+  .modal-inner iframe { flex: 1; border: none; width: 100%; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 768px) {
+    /* Nav */
+    nav { grid-template-columns: 1fr 1fr; padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+
+    /* Hero */
+    .hero {
+      flex-direction: column;
+      text-align: center;
+      padding: 6rem 1.5rem 3rem;
+      gap: 2rem;
+    }
+    .hero-photo { width: 140px; height: 175px; margin: 0 auto; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero-desc { font-size: 0.95rem; margin: 0 auto 2rem; }
+    .hero-badge { font-size: 0.72rem; }
+
+    /* Stats bar */
+    .stats-bar { gap: 1.5rem; padding: 1.5rem 1rem; }
+    .stat-num { font-size: 1.5rem; }
+    .stat-label { font-size: 0.75rem; }
+
+    /* Sections */
+    section { padding: 3rem 1.2rem; }
+    .section-title { font-size: 1.8rem; }
+
+    /* Ventures */
+    .ventures-grid { grid-template-columns: 1fr; }
+
+    /* Ads horizontal scroll */
+    .ads-scroll-wrap {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 1rem;
+      scrollbar-width: none;
+    }
+    .ads-scroll-wrap::-webkit-scrollbar { display: none; }
+    .ads-scroll-wrap .ad-item {
+      flex-shrink: 0;
+      width: 200px;
+      scroll-snap-align: start;
+    }
+
+    /* Websites grid */
+    .proof-grid { grid-template-columns: 1fr 1fr !important; }
+
+    /* YouTube + Audit side by side — stack on mobile */
+    .yt-audit-grid { grid-template-columns: 1fr !important; }
+
+    /* Articles grid */
+    .articles-grid { grid-template-columns: 1fr !important; }
+
+    /* Float buttons */
+    .float-whatsapp { bottom: 1rem; left: 1rem; font-size: 0.8rem; padding: 0.7rem 1rem; }
+    .float-email { bottom: 1rem; right: 1rem; font-size: 0.8rem; padding: 0.7rem 1rem; }
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* Stat counter animation */
+  .stat-num { transition: color 0.3s; }
+
+  /* Hover lift for all cards */
+  .venture-card, .proof-card, .article-card {
+    transition: border-color 0.2s, transform 0.25s, box-shadow 0.25s;
+  }
+  .venture-card:hover, .proof-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(249,115,22,0.08);
+  }
+
+  /* Smooth active nav link */
+  .nav-links a.active { color: var(--accent); font-weight: 600; }
+
+  /* Hero text stagger */
+  .hero-badge { animation: fadeUp 0.5s ease forwards; }
+  .hero h1 { animation: fadeUp 0.6s ease 0.1s both; }
+  .hero-desc { animation: fadeUp 0.6s ease 0.2s both; }
+  .hero-photo { animation: fadeUp 0.7s ease 0.15s both; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Stats count-up pulse */
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+  .stat-num.counted { animation: pulse 0.4s ease; }
+
+
+
+  /* Progress bar */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent);
+    z-index: 200;
+    transition: width 0.1s linear;
+  }
+
+  /* Section tag animate in */
+  .section-tag {
+    position: relative;
+    display: inline-block;
+  }
+
+
+  /* Back to top */
+  .back-top {
+    position: fixed;
+    bottom: 5rem;
+    right: 1.5rem;
+    width: 42px;
+    height: 42px;
+    background: var(--text);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 998;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .back-top.visible { opacity: 1; transform: translateY(0); }
+  .back-top:hover { background: var(--accent); }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<!-- Back to top -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+
+<nav>
+  <a href="#" class="nav-logo">Z.<span>A</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#ventures">Ventures</a>
+    <a href="#work">Work</a>
+  </div>
+  <div style="display:flex; justify-content:flex-end;">
+    <a href="tel:+33743576388" style="background:var(--accent); color:white; padding:0.55rem 1.2rem; border-radius:100px; font-size:0.88rem; font-weight:600; text-decoration:none; display:flex; align-items:center; gap:0.4rem; transition: background 0.2s;" onmouseover="this.style.background='#ea6c0a'" onmouseout="this.style.background='#f97316'">📞 Call me</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="about">
+  <div class="hero-text">
+    <div class="hero-badge">Open to opportunities · Vienna</div>
+    <h1>21. Building things.<br><span>Looking to grow.</span></h1>
+    <p class="hero-desc">
+      I'm Zakaria, 21. Over the past 2 years I launched 4 ventures — a GHL agency, a website subscription business, an ecom brand, and a local SEO agency. None of them made me rich. All of them made me better.
+    </p>
+  </div>
+  <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12ea50e05851175c64d6c2.png" alt="Zakaria Amrouche" class="hero-photo">
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat reveal">
+    <div class="stat-num">10+</div>
+    <div class="stat-label">Websites built</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">1.8M+</div>
+    <div class="stat-label">Ad impressions</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">6.8K</div>
+    <div class="stat-label">YouTube views</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Languages spoken</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- VENTURES -->
+<section id="ventures">
+  <div class="section-tag">The journey</div>
+  <h2 class="section-title">What I built &<br>what I learned</h2>
+  <p class="section-sub">Each venture failed in its own way. Each one taught me something the next one needed.</p>
+
+  <div class="ventures-grid">
+
+    <div class="venture-card reveal" style="position:relative; overflow:hidden;">
+      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:3rem; font-weight:800; color:rgba(249,115,22,0.07); line-height:1; pointer-events:none; user-select:none;">01</div>
+      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
+        <div style="width:36px; height:36px; background:rgba(249,115,22,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <div class="venture-title" style="margin:0;">Website Subscription Agency</div>
+      </div>
+      <p class="venture-desc">Built 10+ websites for local businesses and ecom brands on Shopify and GoHighLevel. Sold them as monthly subscriptions instead of one-off projects.</p>
+      <div class="venture-lesson"><strong>Learned:</strong> What good design and copy actually means. How to manage real clients.</div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Shopify</span>
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">GoHighLevel</span>
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Web Design</span>
+      </div>
+    </div>
+
+    <div class="venture-card reveal reveal-delay-1" style="position:relative; overflow:hidden;">
+      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:3rem; font-weight:800; color:rgba(249,115,22,0.07); line-height:1; pointer-events:none; user-select:none;">02</div>
+      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
+        <div style="width:36px; height:36px; background:rgba(249,115,22,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="venture-title" style="margin:0;">GHL Services Agency</div>
+      </div>
+      <p class="venture-desc">Learned GoHighLevel from scratch and built automations, pipelines, and missed call text-back systems for small businesses. Made YouTube tutorials while learning.</p>
+      <div class="venture-lesson"><strong>Learned:</strong> CRMs, automation, the technical side of marketing. One video hit 6,800 organic views.</div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">GoHighLevel</span>
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Automation</span>
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">YouTube</span>
+      </div>
+    </div>
+
+    <div class="venture-card reveal reveal-delay-2" style="position:relative; overflow:hidden;">
+      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:3rem; font-weight:800; color:rgba(249,115,22,0.07); line-height:1; pointer-events:none; user-select:none;">03</div>
+      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
+        <div style="width:36px; height:36px; background:rgba(249,115,22,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="venture-title" style="margin:0;">Ecom Brand — LuxoraBloom</div>
+      </div>
+      <p class="venture-desc">Launched a beauty ecom brand. Ran TikTok and Meta ad campaigns, tested 300+ creatives, generated 1.8M+ impressions at €2.08 avg CPM.</p>
+      <div class="venture-lesson"><strong>Learned:</strong> Paid ads, hooks, creative testing, audiences. How to lose money efficiently.</div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">TikTok Ads</span>
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Meta Ads</span>
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Ecom</span>
+      </div>
+    </div>
+
+    <div class="venture-card reveal reveal-delay-3" style="position:relative; overflow:hidden; border-color: rgba(249,115,22,0.25);">
+      <div style="position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, #f97316, #fb923c);"></div>
+      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:3rem; font-weight:800; color:rgba(249,115,22,0.07); line-height:1; pointer-events:none; user-select:none;">04</div>
+      <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
+        <div style="width:36px; height:36px; background:rgba(249,115,22,0.15); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.6rem;">
+          <div class="venture-title" style="margin:0;">Novo Growth Agency</div>
+          <span style="background:rgba(249,115,22,0.12); color:#c2580a; border:1px solid rgba(249,115,22,0.3); border-radius:100px; padding:0.15rem 0.6rem; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Active</span>
+        </div>
+      </div>
+      <p class="venture-desc">Local SEO agency targeting UK service businesses. Cold calling, branded audit reports, follow-up sequences, and full service delivery.</p>
+      <div class="venture-lesson"><strong>Learned:</strong> Lead magnets, follow-ups, the full sales cycle. Currently active.</div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Local SEO</span>
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Cold Calling</span>
+        <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">SEO Audits</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WORK & PROOF -->
+<section id="work">
+  <div class="section-tag">Work & Proof</div>
+  <h2 class="section-title">Some of my work</h2>
+  <p class="section-sub">Not claims. Actual work you can see, watch, and click through.</p>
+
+  <!-- WEBSITES -->
+  <h3 style="font-size:1rem; font-weight:700; margin-bottom:1.2rem; color:var(--text);">Websites</h3>
+  <div class="proof-grid" style="margin-bottom:3rem;">
+    <div class="proof-card reveal" style="overflow:hidden;" onclick="openModal('https://novogrowthagency.com/')">
+      <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a14a48d3c3aed7c63c28e3b.png" style="width:100%; height:140px; object-fit:cover; object-position:top; display:block; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="proof-card-body"><p class="proof-card-title">Novo Growth Agency</p><p class="proof-card-sub">My current Local SEO agency</p></div>
+    </div>
+    <div class="proof-card reveal" style="overflow:hidden;" onclick="openModal('https://ukfreewebsite.co.uk/')">
+      <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a14a48f9b6d07a704aef9ae.png" style="width:100%; height:140px; object-fit:cover; object-position:top; display:block; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="proof-card-body"><p class="proof-card-title">UK Free Website</p><p class="proof-card-sub">Website subscription agency</p></div>
+    </div>
+    <div class="proof-card reveal" style="overflow:hidden;" onclick="openModal('https://designedbynovo.com/true-events')">
+      <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a14a492069d64aa5d34017c.png" style="width:100%; height:140px; object-fit:cover; object-position:top; display:block; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="proof-card-body"><p class="proof-card-title">True Events</p><p class="proof-card-sub">Client website — events company</p></div>
+    </div>
+    <div class="proof-card reveal" style="overflow:hidden;" onclick="openModal('https://designedbynovo.com/quantum-roofing')">
+      <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a14a4996cc0eead5cdd8c07.png" style="width:100%; height:140px; object-fit:cover; object-position:top; display:block; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      <div class="proof-card-body"><p class="proof-card-title">Quantum Roofing</p><p class="proof-card-sub">Client website — roofing company</p></div>
+    </div>
+  </div>
+
+  <!-- AD CREATIVES -->
+  <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.4rem; color:var(--text);">Ad Creatives</h3>
+  <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1.2rem;">TikTok ads — 1.8M+ impressions · €2.08 avg CPM · 300+ creatives tested</p>
+  <!-- Desktop grid / Mobile horizontal scroll -->
+  <div class="ads-desktop" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:1rem; margin-bottom:5rem;">
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+      <video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33c6cc0eead5cc0e234.mp4" controls playsinline style="width:100%; display:block; aspect-ratio:9/16; object-fit:cover; background:#000;"></video>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+      <video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33c3c3aed7c63a5a4ca.mp4" controls playsinline style="width:100%; display:block; aspect-ratio:9/16; object-fit:cover; background:#000;"></video>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+      <video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33cfe2210f89e6129e7.mp4" controls playsinline style="width:100%; display:block; aspect-ratio:9/16; object-fit:cover; background:#000;"></video>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+      <video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33c6cc0eead5cc0e235.mp4" controls playsinline style="width:100%; display:block; aspect-ratio:9/16; object-fit:cover; background:#000;"></video>
+    </div>
+  </div>
+
+  <!-- YOUTUBE + AUDIT SIDE BY SIDE -->
+  <div class="yt-audit-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; margin-bottom:3rem; align-items:start;">
+
+    <!-- YouTube -->
+    <div>
+      <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:var(--text);">YouTube Tutorial — 6,800+ organic views</h3>
+      <div style="border-radius:12px; overflow:hidden; border:1px solid var(--border); cursor:pointer;" onclick="window.open('https://youtu.be/X9TQcF4OwCw', '_blank')">
+        <div style="position:relative;">
+          <img src="https://img.youtube.com/vi/X9TQcF4OwCw/maxresdefault.jpg" alt="YouTube Tutorial" style="width:100%; display:block;">
+          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3); transition:background 0.2s;" onmouseover="this.style.background='rgba(0,0,0,0.5)'" onmouseout="this.style.background='rgba(0,0,0,0.3)'">
+            <div style="width:60px; height:60px; background:#f97316; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+        </div>
+        <div style="padding:1rem 1.2rem; background:var(--surface);">
+          <p style="font-size:0.88rem; color:var(--muted);">GoHighLevel Google Review Card setup. Published with no promotion — grew organically.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audit -->
+    <div>
+      <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:var(--text);">Local SEO Audit Sample</h3>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.8rem; height:100%; display:flex; flex-direction:column; justify-content:space-between; gap:1.5rem;">
+        <div>
+          <p style="font-weight:700; font-size:1rem; margin-bottom:0.4rem;">Local Search Audit — Sonic Cleaning</p>
+          <p style="color:var(--muted); font-size:0.88rem;">Branded audit covering map rankings, GBP, local listings, reputation and link authority.</p>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
+            <span class="score-badge score-good">Links ✓</span>
+            <span class="score-badge score-poor">Rank Tracker ✗</span>
+            <span class="score-badge score-poor">Listings ✗</span>
+            <span class="score-badge score-good">Reputation ✓</span>
+            <span class="score-badge score-good">GBP ✓</span>
+          </div>
+        </div>
+        <button onclick="openAudit()" style="background:var(--accent); color:white; border:none; border-radius:8px; padding:0.75rem 1.4rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; font-weight:600; cursor:pointer; align-self:flex-start; transition:background 0.2s;" onmouseover="this.style.background='#ea6c0a'" onmouseout="this.style.background='#f97316'">View Full Audit →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ARTICLES -->
+  <h3 style="font-size:1rem; font-weight:700; margin-bottom:1.2rem; margin-top:2rem; color:var(--text);">Local SEO Articles</h3>
+  <div class="articles-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1.2rem;">
+
+    <div onclick="openModal('https://novogrowthagency.com/they-find-you-but-call-your-competitor')" style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; cursor:pointer; transition: border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='rgba(249,115,22,0.4)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor=''; this.style.transform=''">
+      <div style="background:linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height:100px; display:flex; align-items:center; justify-content:center; padding:1.2rem; position:relative;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+    </svg>
+        <div style="position:absolute; top:0.8rem; left:0.8rem; background:rgba(249,115,22,0.15); border:1px solid rgba(249,115,22,0.3); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.72rem; font-weight:600; color:#f97316; letter-spacing:0.05em;">LOCAL SEO</div>
+      </div>
+      <div style="padding:1.2rem;">
+        <p style="font-weight:700; font-size:0.95rem; color:var(--text); margin:0 0 0.5rem; line-height:1.4;">People are finding your business. So why are they calling your competitor?</p>
+        <p style="font-size:0.82rem; color:var(--muted); margin:0;">Why getting found on Google is only half the battle.</p>
+        <p style="font-size:0.82rem; color:var(--accent); font-weight:600; margin-top:0.8rem;">Read article →</p>
+      </div>
+    </div>
+
+    <div onclick="openModal('https://novogrowthagency.com/google-doesnt-trust-your-business')" style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; cursor:pointer; transition: border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='rgba(249,115,22,0.4)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor=''; this.style.transform=''">
+      <div style="background:linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height:100px; display:flex; align-items:center; justify-content:center; padding:1.2rem; position:relative;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      <path d="M11 8v6M8 11h6"/>
+    </svg>
+        <div style="position:absolute; top:0.8rem; left:0.8rem; background:rgba(249,115,22,0.15); border:1px solid rgba(249,115,22,0.3); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.72rem; font-weight:600; color:#f97316; letter-spacing:0.05em;">LOCAL SEO</div>
+      </div>
+      <div style="padding:1.2rem;">
+        <p style="font-weight:700; font-size:0.95rem; color:var(--text); margin:0 0 0.5rem; line-height:1.4;">Google doesn't trust your business. Here's how to fix it.</p>
+        <p style="font-size:0.82rem; color:var(--muted); margin:0;">How inconsistent citations silently drag your ranking down.</p>
+        <p style="font-size:0.82rem; color:var(--accent); font-weight:600; margin-top:0.8rem;">Read article →</p>
+      </div>
+    </div>
+
+    <div onclick="openModal('https://novogrowthagency.com/no-photos-lost-jobs')" style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; cursor:pointer; transition: border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='rgba(249,115,22,0.4)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor=''; this.style.transform=''">
+      <div style="background:linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height:100px; display:flex; align-items:center; justify-content:center; padding:1.2rem; position:relative;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+      <path d="M21 15l-5-5L5 21"/>
+    </svg>
+        <div style="position:absolute; top:0.8rem; left:0.8rem; background:rgba(249,115,22,0.15); border:1px solid rgba(249,115,22,0.3); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.72rem; font-weight:600; color:#f97316; letter-spacing:0.05em;">LOCAL SEO</div>
+      </div>
+      <div style="padding:1.2rem;">
+        <p style="font-weight:700; font-size:0.95rem; color:var(--text); margin:0 0 0.5rem; line-height:1.4;">No photos on Google. No trust. No call. You just lost a job.</p>
+        <p style="font-size:0.82rem; color:var(--muted); margin:0;">Why your GBP photos are doing your selling for you.</p>
+        <p style="font-size:0.82rem; color:var(--accent); font-weight:600; margin-top:0.8rem;">Read article →</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>Zakaria Amrouche · Vienna, Austria</p>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<a href="https://wa.me/33743576388" target="_blank" class="float-btn float-whatsapp">💬 WhatsApp</a>
+<a href="mailto:amrouche921@gmail.com" class="float-btn float-email">✉️ Email me</a>
+
+<!-- MODAL -->
+<div id="siteModal" style="display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:0.8rem;">
+  <div class="modal-inner">
+    <div class="modal-header">
+      <span id="modalTitle">Preview</span>
+      <div style="display:flex; gap:0.8rem; align-items:center;">
+        <a id="modalLink" href="#" target="_blank">Open in new tab →</a>
+        <button onclick="closeModal()">✕ Close</button>
+      </div>
+    </div>
+    <iframe id="modalFrame" src=""></iframe>
+  </div>
+</div>
+
+<!-- AUDIT MODAL -->
+<div id="auditModal" style="display:none; position:fixed; inset:0; z-index:1001; background:rgba(0,0,0,0.75); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:0.8rem;">
+  <div class="modal-inner">
+    <div class="modal-header">
+      <span>Local Search Audit — Sonic Cleaning</span>
+      <div style="display:flex; gap:0.8rem; align-items:center;">
+        <a href="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12d63a6cc0eead5cc06c32.pdf" target="_blank">Open in new tab →</a>
+        <button onclick="closeAudit()">✕ Close</button>
+      </div>
+    </div>
+    <iframe src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12d63a6cc0eead5cc06c32.pdf"></iframe>
+  </div>
+</div>
+
+<script>
+function openModal(url) {
+  document.getElementById('modalFrame').src = url;
+  document.getElementById('modalTitle').textContent = url.replace('https://','');
+  document.getElementById('modalLink').href = url;
+  document.getElementById('siteModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('siteModal').style.display = 'none';
+  document.getElementById('modalFrame').src = '';
+  document.body.style.overflow = '';
+}
+function openAudit() {
+  document.getElementById('auditModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeAudit() {
+  document.getElementById('auditModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.getElementById('siteModal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
+document.getElementById('auditModal').addEventListener('click', function(e) { if(e.target===this) closeAudit(); });
+</script>
+
+
+<script>
+// On mobile, replace ads grid with horizontal scroll
+function initMobileAds() {
+  if (window.innerWidth <= 768) {
+    const desktop = document.querySelector('.ads-desktop');
+    if (!desktop) return;
+    const videos = desktop.querySelectorAll('video');
+    const srcs = Array.from(videos).map(v => v.src);
+
+    const scroll = document.createElement('div');
+    scroll.className = 'ads-scroll-wrap';
+    scroll.style.marginBottom = '4rem';
+
+    srcs.forEach(src => {
+      const item = document.createElement('div');
+      item.className = 'ad-item';
+      item.style.cssText = 'flex-shrink:0; width:200px; scroll-snap-align:start; background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden;';
+      const vid = document.createElement('video');
+      vid.src = src;
+      vid.controls = true;
+      vid.setAttribute('playsinline', '');
+      vid.style.cssText = 'width:100%; display:block; aspect-ratio:9/16; object-fit:cover; background:#000;';
+      item.appendChild(vid);
+      scroll.appendChild(item);
+    });
+
+    desktop.replaceWith(scroll);
+  }
+}
+window.addEventListener('DOMContentLoaded', initMobileAds);
+window.addEventListener('resize', initMobileAds);
+</script>
+
+
+<script>
+// ── Back to top ──
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) backTop.classList.add('visible');
+  else backTop.classList.remove('visible');
+});
+
+// ── Scroll progress bar ──
+window.addEventListener('scroll', () => {
+  const scroll = window.scrollY;
+  const height = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scroll / height) * 100;
+  document.getElementById('scrollProgress').style.width = progress + '%';
+});
+
+// ── Reveal on scroll ──
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+// ── Count-up for stats ──
+function countUp(el, target, duration) {
+  let start = 0;
+  const isDecimal = target.toString().includes('.');
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const val = Math.floor(progress * target);
+    el.textContent = isDecimal ? (progress * target).toFixed(1) + 'M+' :
+                     target >= 1000000 ? (val/1000000).toFixed(1) + 'M+' :
+                     val + (el.dataset.suffix || '');
+    if (progress < 1) requestAnimationFrame(step);
+    else {
+      el.textContent = el.dataset.final;
+      el.classList.add('counted');
+    }
+  };
+  requestAnimationFrame(step);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const nums = entry.target.querySelectorAll('.stat-num');
+      nums.forEach(num => {
+        num.dataset.final = num.textContent;
+        const raw = num.textContent.replace(/[^0-9.]/g, '');
+        if (raw) countUp(num, parseFloat(raw), 2500);
+      });
+      statsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+const statsBar = document.querySelector('.stats-bar');
+if (statsBar) statsObserver.observe(statsBar);
+
+
+// ── Active nav link on scroll ──
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
