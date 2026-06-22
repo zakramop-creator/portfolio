@@ -7,12 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #ffffff;
-    --surface: #f8f8f6;
-    --surface2: #f0efe9;
-    --border: rgba(0,0,0,0.08);
-    --text: #111111;
-    --muted: #666;
+    --bg: #fafaf8;
+    --surface: #f3f3ef;
+    --surface2: #ebebE5;
+    --border: rgba(0,0,0,0.07);
+    --text: #0e0e0e;
+    --muted: #5a5a5a;
     --accent: #f97316;
     --accent2: #ea6c0a;
   }
@@ -21,6 +21,8 @@
 
   body {
     background: var(--bg);
+    background-image: radial-gradient(circle, rgba(0,0,0,0.032) 1px, transparent 1px);
+    background-size: 26px 26px;
     color: var(--text);
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 16px;
@@ -55,41 +57,82 @@
   .nav-links a:hover { color: var(--text); }
 
   /* HERO */
+  .hero-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+    animation: glowBreathe 6s ease-in-out infinite;
+  }
+  @keyframes glowBreathe {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+  }
   .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 8rem 2rem 4rem;
+    padding: 8rem 2rem 5rem;
     max-width: 1100px;
     margin: 0 auto;
-    gap: 4rem;
+    gap: 5rem;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-text { flex: 1; }
 
   .hero-badge {
-    display: inline-block;
-    background: rgba(249,115,22,0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(249,115,22,0.08);
     color: #c2580a;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.45rem 1rem;
     border-radius: 100px;
-    border: 1px solid rgba(249,115,22,0.25);
+    border: 1px solid rgba(249,115,22,0.22);
     margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: heroPing 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes heroPing {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
   }
 
   .hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
     font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
     margin-bottom: 1.5rem;
   }
 
-  .hero h1 span { color: var(--accent); }
+  .hero h1 span {
+    background: linear-gradient(120deg, #f97316 0%, #fb923c 50%, #f97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
   .hero-desc {
     font-size: 1.05rem;
@@ -102,82 +145,115 @@
   .hero-photo {
     width: 260px;
     height: 320px;
-    border-radius: 16px;
+    border-radius: 20px;
     object-fit: cover;
     object-position: center top;
     border: 3px solid var(--accent);
     flex-shrink: 0;
+    box-shadow: 0 0 0 8px rgba(249,115,22,0.08), 0 24px 60px rgba(249,115,22,0.14);
+    animation: heroFloat 5s ease-in-out infinite;
+  }
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
   }
 
   /* STATS BAR */
   .stats-bar {
+    background: var(--surface);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    padding: 2rem;
+    padding: 2.2rem;
     display: flex;
     justify-content: center;
-    gap: 4rem;
+    gap: 5rem;
     flex-wrap: wrap;
   }
 
   .stat { text-align: center; }
-  .stat-num { font-size: 2rem; font-weight: 800; color: var(--accent); }
-  .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.2rem; }
+  .stat-num {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #f97316 0%, #fb923c 40%, #fbbf24 70%, #f97316 100%);
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradShift 4s linear infinite;
+  }
+  @keyframes gradShift {
+    0% { background-position: 0% center; }
+    100% { background-position: 250% center; }
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
 
   /* SECTIONS */
   section {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 5rem 2rem;
+    padding: 6rem 2rem;
   }
 
-  .section-tag {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.8rem;
-  }
+  /* section-tag styled in animations block below */
 
   .section-title {
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-size: clamp(2rem, 4vw, 3.2rem);
     font-weight: 800;
-    letter-spacing: -0.01em;
-    margin-bottom: 1rem;
-    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.2rem;
+    line-height: 1.1;
   }
+
+  .section-title span { color: var(--accent); }
 
   .section-sub {
     color: var(--muted);
     font-size: 1rem;
     max-width: 560px;
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
+    line-height: 1.8;
   }
 
   .divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(249,115,22,0.3), transparent);
+    background: var(--border);
     max-width: 1100px;
     margin: 0 auto;
+    opacity: 0.5;
   }
 
   /* VENTURES */
   .ventures-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: 1.2rem;
   }
+
+  .ventures-grid .venture-card:last-child {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .ventures-grid .venture-card:last-child .venture-lesson { align-self: start; }
 
   .venture-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.8rem;
-    transition: border-color 0.2s, transform 0.2s;
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s, background 0.3s, box-shadow 0.3s;
   }
 
-  .venture-card:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-2px); }
+  .venture-card:hover {
+    border-color: rgba(249,115,22,0.28);
+    transform: translateY(-4px);
+    background: #f5f4f0;
+    box-shadow: 0 20px 50px rgba(249,115,22,0.08);
+  }
 
   .venture-title {
     font-size: 1.1rem;
@@ -191,7 +267,7 @@
     background: rgba(249,115,22,0.07);
     border-left: 2px solid var(--accent);
     padding: 0.6rem 0.8rem;
-    font-size: 0.82rem;
+    font-size: 0.875rem;
     color: #c2580a;
     border-radius: 0 4px 4px 0;
   }
@@ -321,6 +397,10 @@
   }
 
   @media (max-width: 768px) {
+    /* Current project section */
+    .current-project-inner { grid-template-columns: 1fr !important; }
+    .current-project-inner iframe { height: 360px !important; }
+
     /* Nav */
     nav { grid-template-columns: 1fr 1fr; padding: 1rem 1.2rem; }
     .nav-links { display: none; }
@@ -348,13 +428,7 @@
 
     /* Ventures */
     .ventures-grid { grid-template-columns: 1fr; }
-
-    /* VSL section */
-    #vsl .vsl-inner { grid-template-columns: 1fr !important; gap: 2rem !important; }
-    #vsl .vsl-text { text-align: center; }
-    #vsl .vsl-text p { margin: 0 auto 2rem; }
-    #vsl .vsl-bullets { align-items: center; }
-    #vsl .vsl-video { justify-content: center; }
+    .ventures-grid .venture-card:last-child { grid-column: span 1; grid-template-columns: 1fr; }
 
     /* Ads horizontal scroll */
     .ads-scroll-wrap {
@@ -385,13 +459,31 @@
     /* Float buttons */
     .float-whatsapp { bottom: 1rem; left: 1rem; font-size: 0.8rem; padding: 0.7rem 1rem; }
     .float-email { bottom: 1rem; right: 1rem; font-size: 0.8rem; padding: 0.7rem 1rem; }
+
+    /* CloserAI app mockup — reduce height on mobile */
+    .closer-app-mockup { height: 340px !important; }
+
+    /* Hero CTA buttons — center on mobile */
+    .hero-ctas { justify-content: center; }
+
+    /* Stat gradient — smaller on mobile */
+    .stat-num { font-size: 1.8rem; }
+
+    /* VSL section */
+    #vsl { padding: 3rem 1.2rem; }
+
+    /* Hero photo — pause float on mobile (performance) */
+    .hero-photo { animation: none; }
+
+    /* CloserAI 2-col stats inline — stack on very small */
+    .closer-stats-row { flex-wrap: wrap; }
   }
 
   /* ── SCROLL ANIMATIONS ── */
   .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(24px);
+    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
   }
   .reveal.visible {
     opacity: 1;
@@ -399,8 +491,8 @@
   }
   .reveal-left {
     opacity: 0;
-    transform: translateX(-30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateX(-24px);
+    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
   }
   .reveal-left.visible {
     opacity: 1;
@@ -408,17 +500,17 @@
   }
   .reveal-right {
     opacity: 0;
-    transform: translateX(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateX(24px);
+    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
   }
   .reveal-right.visible {
     opacity: 1;
     transform: translateX(0);
   }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+  .reveal-delay-4 { transition-delay: 0.32s; }
 
   /* Stat counter animation */
   .stat-num { transition: color 0.3s; }
@@ -428,8 +520,9 @@
     transition: border-color 0.2s, transform 0.25s, box-shadow 0.25s;
   }
   .venture-card:hover, .proof-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(249,115,22,0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 50px rgba(249,115,22,0.1), 0 4px 12px rgba(0,0,0,0.06);
+    border-color: rgba(249,115,22,0.28) !important;
   }
 
   /* Smooth active nav link */
@@ -467,10 +560,18 @@
     transition: width 0.1s linear;
   }
 
-  /* Section tag animate in */
   .section-tag {
-    position: relative;
     display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(249,115,22,0.07);
+    border: 1px solid rgba(249,115,22,0.18);
+    border-radius: 100px;
+    padding: 0.3rem 0.9rem;
+    margin-bottom: 0.8rem;
   }
 
 
@@ -479,8 +580,8 @@
     position: fixed;
     bottom: 5rem;
     right: 1.5rem;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     background: var(--text);
     color: white;
     border: none;
@@ -519,7 +620,6 @@
     <a href="#about">About</a>
     <a href="#ventures">Ventures</a>
     <a href="#work">Work</a>
-    <a href="#vsl">Video</a>
   </div>
   <div style="display:flex; justify-content:flex-end;">
     <a href="tel:+33743576388" style="background:var(--accent); color:white; padding:0.55rem 1.2rem; border-radius:100px; font-size:0.88rem; font-weight:600; text-decoration:none; display:flex; align-items:center; gap:0.4rem; transition: background 0.2s;" onmouseover="this.style.background='#ea6c0a'" onmouseout="this.style.background='#f97316'">📞 Call me</a>
@@ -527,95 +627,192 @@
 </nav>
 
 <!-- HERO -->
+<div class="hero-wrapper">
 <div class="hero" id="about">
   <div class="hero-text">
-    <div class="hero-badge">Open to opportunities · Vienna</div>
-    <h1>21. Building things.<br><span>Looking to grow.</span></h1>
+    <div class="hero-badge">Looking for agency role · Available immediately</div>
+    <h1>Ran the whole stack solo.<br><span>Here to take things off your plate.</span></h1>
     <p class="hero-desc">
-      I'm Zakaria, 21. Over the past 2 years I launched 4 ventures — a GHL agency, a website subscription business, an ecom brand, and a local SEO agency. None of them made me rich. All of them made me better.
+      Zakaria, 21. Two years running the full agency stack solo — GHL, paid ads, web design, local SEO. For real clients. I know how the pieces connect. No hand-holding needed.
     </p>
+    <div class="hero-ctas" style="display:flex; gap:0.8rem; flex-wrap:wrap;">
+      <a href="mailto:amrouche921@gmail.com" style="background:var(--accent); color:white; padding:0.75rem 1.6rem; border-radius:100px; font-size:0.95rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem; transition:background 0.2s;" onmouseover="this.style.background='#ea6c0a'" onmouseout="this.style.background='#f97316'">✉️ Email me</a>
+      <a href="https://wa.me/33743576388" target="_blank" style="background:#111; color:white; padding:0.75rem 1.6rem; border-radius:100px; font-size:0.95rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem; transition:background 0.2s;" onmouseover="this.style.background='#333'" onmouseout="this.style.background='#111'">💬 WhatsApp</a>
+    </div>
   </div>
   <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12ea50e05851175c64d6c2.png" alt="Zakaria Amrouche" class="hero-photo">
+</div>
 </div>
 
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stat reveal">
     <div class="stat-num">10+</div>
-    <div class="stat-label">Websites built</div>
+    <div class="stat-label">Client websites built</div>
   </div>
   <div class="stat reveal">
     <div class="stat-num">1.8M+</div>
-    <div class="stat-label">Ad impressions</div>
+    <div class="stat-label">Ad impressions generated</div>
   </div>
   <div class="stat reveal">
-    <div class="stat-num">6.8K</div>
-    <div class="stat-label">YouTube views</div>
+    <div class="stat-num">300+</div>
+    <div class="stat-label">Ad creatives tested</div>
   </div>
   <div class="stat reveal">
-    <div class="stat-num">4</div>
-    <div class="stat-label">Languages spoken</div>
+    <div class="stat-num">2</div>
+    <div class="stat-label">Years of client work</div>
   </div>
 </div>
 
-<div class="divider"></div>
+<!-- CURRENT PROJECT -->
+<div style="background:#0d0d0d; padding:4rem 2rem; position:relative; overflow:hidden;">
+  <!-- Ambient glow -->
+  <div style="position:absolute; top:-60px; right:-60px; width:500px; height:500px; background:radial-gradient(circle, rgba(249,115,22,0.1) 0%, transparent 65%); pointer-events:none;"></div>
+  <div style="position:absolute; bottom:-80px; left:-40px; width:400px; height:400px; background:radial-gradient(circle, rgba(249,115,22,0.05) 0%, transparent 65%); pointer-events:none;"></div>
 
-<!-- VSL -->
-<section id="vsl" style="padding: 4rem 2rem;">
-  <div class="vsl-inner" style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
-    
-    <!-- Left — text -->
-    <div class="vsl-text">
-      <div class="section-tag">Video intro</div>
-      <h2 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 1.2rem;">Hear it<br>from me.</h2>
-      <p style="color: var(--muted); font-size: 1rem; line-height: 1.8; margin-bottom: 2rem; max-width: 420px;">I made this video specifically for the people reading this. 90 seconds. No script. Just me talking about why I'm here and what I'm looking for.</p>
-      <div class="vsl-bullets" style="display: flex; flex-direction: column; gap: 0.8rem;">
-        <div style="display: flex; align-items: center; gap: 0.8rem;">
-          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink:0;"></div>
-          <span style="font-size: 0.9rem; color: var(--muted);">Who I am and what I've built</span>
-        </div>
-        <div style="display: flex; align-items: center; gap: 0.8rem;">
-          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink:0;"></div>
-          <span style="font-size: 0.9rem; color: var(--muted);">Why I'm looking to join an agency</span>
-        </div>
-        <div style="display: flex; align-items: center; gap: 0.8rem;">
-          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink:0;"></div>
-          <span style="font-size: 0.9rem; color: var(--muted);">What I want to contribute</span>
-        </div>
-      </div>
+  <div style="max-width:1100px; margin:0 auto; position:relative;">
+    <!-- Tags -->
+    <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:2rem; flex-wrap:wrap;">
+      <span style="background:rgba(249,115,22,0.12); color:var(--accent); border:1px solid rgba(249,115,22,0.25); border-radius:100px; padding:0.3rem 0.9rem; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em;">Current project</span>
+      <span style="display:inline-flex; align-items:center; gap:0.4rem; background:rgba(34,197,94,0.1); color:#4ade80; border:1px solid rgba(34,197,94,0.2); border-radius:100px; padding:0.3rem 0.9rem; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em;"><span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;animation:heroPing 2s ease-in-out infinite;"></span>Live</span>
     </div>
 
-    <!-- Right — video -->
-    <div class="vsl-video" style="display: flex; justify-content: center;">
-      <div style="position: relative; width: 100%; max-width: 449px;">
-        <div style="position: absolute; inset: -8px; border-radius: 20px; border: 2px solid rgba(249,115,22,0.2); pointer-events: none;"></div>
-        <video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a14a0c19b6d07a704aeb6b6.mp4" controls playsinline controlsList="nofullscreen" disablePictureInPicture style="width: 100%; border-radius: 14px; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.12);"></video>
-      </div>
-    </div>
+    <!-- Two-col: text + browser mockup -->
+    <div class="current-project-inner" style="display:grid; grid-template-columns:1fr 1.3fr; gap:4rem; align-items:start;">
 
+      <!-- Left: info -->
+      <div>
+        <h2 style="color:white; font-size:clamp(1.5rem, 2.5vw, 2rem); font-weight:800; letter-spacing:-0.01em; margin-bottom:0.8rem; line-height:1.2;">CloserAI<br><span style="color:var(--accent);">Practice closing. Without risking real deals.</span></h2>
+        <p style="color:rgba(255,255,255,0.55); font-size:0.95rem; line-height:1.8; margin-bottom:1.5rem;">AI sales simulator. Voice + text. 6 difficulty levels, real-time scoring, coaching report. Built solo from scratch.</p>
+
+        <!-- Inline stats -->
+        <div class="closer-stats-row" style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:1.8rem;">
+          <div style="background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2); border-radius:10px; padding:0.6rem 1rem; text-align:center; flex:1; min-width:80px;">
+            <div style="font-size:1.4rem; font-weight:800; color:var(--accent); line-height:1;">6</div>
+            <div style="font-size:0.7rem; color:rgba(255,255,255,0.4); margin-top:0.2rem; white-space:nowrap;">levels</div>
+          </div>
+          <div style="background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2); border-radius:10px; padding:0.6rem 1rem; text-align:center; flex:1; min-width:80px;">
+            <div style="font-size:1.4rem; font-weight:800; color:var(--accent); line-height:1;">18</div>
+            <div style="font-size:0.7rem; color:rgba(255,255,255,0.4); margin-top:0.2rem; white-space:nowrap;">products</div>
+          </div>
+          <div style="background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2); border-radius:10px; padding:0.6rem 1rem; text-align:center; flex:1; min-width:80px;">
+            <div style="font-size:1.4rem; font-weight:800; color:var(--accent); line-height:1;">$19</div>
+            <div style="font-size:0.7rem; color:rgba(255,255,255,0.4); margin-top:0.2rem; white-space:nowrap;">/ month</div>
+          </div>
+        </div>
+
+        <!-- Tech pills -->
+        <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.8rem;">
+          <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:100px; padding:0.2rem 0.65rem; font-size:0.72rem; color:rgba(255,255,255,0.5); font-weight:500;">Claude API</span>
+          <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:100px; padding:0.2rem 0.65rem; font-size:0.72rem; color:rgba(255,255,255,0.5); font-weight:500;">ElevenLabs TTS</span>
+          <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:100px; padding:0.2rem 0.65rem; font-size:0.72rem; color:rgba(255,255,255,0.5); font-weight:500;">Groq Whisper</span>
+          <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:100px; padding:0.2rem 0.65rem; font-size:0.72rem; color:rgba(255,255,255,0.5); font-weight:500;">Stripe</span>
+          <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:100px; padding:0.2rem 0.65rem; font-size:0.72rem; color:rgba(255,255,255,0.5); font-weight:500;">Supabase</span>
+          <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:100px; padding:0.2rem 0.65rem; font-size:0.72rem; color:rgba(255,255,255,0.5); font-weight:500;">Node.js · Railway</span>
+        </div>
+
+        <a href="https://closerinstinct.com" target="_blank" style="display:inline-flex; align-items:center; gap:0.5rem; background:var(--accent); color:white; padding:0.75rem 1.6rem; border-radius:100px; font-size:0.9rem; font-weight:700; text-decoration:none; transition:background 0.2s;" onmouseover="this.style.background='#ea6c0a'" onmouseout="this.style.background='#f97316'">Open live app →</a>
+      </div>
+
+      <!-- Right: browser mockup with iframe -->
+      <div style="position:relative;">
+        <!-- Shadow glow behind mockup -->
+        <div style="position:absolute; inset:-20px; background:radial-gradient(ellipse at center, rgba(249,115,22,0.15) 0%, transparent 70%); pointer-events:none; z-index:0;"></div>
+        <div style="position:relative; z-index:1; border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); box-shadow:0 30px 80px rgba(0,0,0,0.5);">
+          <!-- Browser chrome -->
+          <div style="background:#1c1c1c; padding:10px 14px; display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.06);">
+            <div style="display:flex; gap:5px; flex-shrink:0;">
+              <div style="width:11px;height:11px;border-radius:50%;background:#ff5f57;"></div>
+              <div style="width:11px;height:11px;border-radius:50%;background:#febc2e;"></div>
+              <div style="width:11px;height:11px;border-radius:50%;background:#28c840;"></div>
+            </div>
+            <div style="flex:1; background:rgba(255,255,255,0.07); border-radius:6px; padding:4px 10px; font-size:0.72rem; color:rgba(255,255,255,0.35); font-family:'Plus Jakarta Sans',sans-serif; display:flex; align-items:center; gap:5px;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              closerinstinct.com
+            </div>
+          </div>
+          <!-- App UI mockup -->
+          <div class="closer-app-mockup" style="background:#0a0a0a; height:480px; display:flex; flex-direction:column; padding:1.4rem; gap:1rem; font-family:'Plus Jakarta Sans',sans-serif;">
+
+            <!-- Header: level + close bar -->
+            <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
+              <div style="background:#1a1a1a; border-radius:8px; padding:0.4rem 0.7rem; font-size:0.7rem; color:rgba(255,255,255,0.45); white-space:nowrap;">😈 CUTTHROAT · Solar Panels</div>
+              <div style="flex:1; min-width:80px; background:#1a1a1a; border-radius:100px; height:7px; overflow:hidden;">
+                <div id="closeBar" style="width:62%; height:100%; background:linear-gradient(90deg,#f97316,#fb923c); border-radius:100px; transition: width 2s ease-in-out;"></div>
+              </div>
+              <div id="closeBarPct" style="font-size:0.7rem; color:#f97316; font-weight:700; flex-shrink:0;">62%</div>
+            </div>
+
+            <!-- Chat messages -->
+            <div style="flex:1; display:flex; flex-direction:column; gap:0.8rem; overflow:hidden; justify-content:flex-end;">
+
+              <div style="display:flex; gap:0.6rem; align-items:flex-start;">
+                <div style="width:26px;height:26px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0;">👤</div>
+                <div style="background:#1a1a1a;border-radius:0 10px 10px 10px;padding:0.65rem 0.85rem;font-size:0.8rem;color:rgba(255,255,255,0.65);max-width:78%;line-height:1.5;">
+                  Look, I've seen solar pitches before. The savings never add up like they say.
+                </div>
+              </div>
+
+              <div style="display:flex; gap:0.6rem; align-items:flex-start; flex-direction:row-reverse;">
+                <div style="width:26px;height:26px;border-radius:50%;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.25);display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0;">🎯</div>
+                <div style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.18);border-radius:10px 0 10px 10px;padding:0.65rem 0.85rem;font-size:0.8rem;color:rgba(255,255,255,0.82);max-width:78%;line-height:1.5;">
+                  Fair — most pitches use inflated numbers. Can I show you ours against your current bill?
+                </div>
+              </div>
+
+              <div style="display:flex; gap:0.6rem; align-items:flex-start;">
+                <div style="width:26px;height:26px;border-radius:50%;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0;">👤</div>
+                <div style="background:#1a1a1a;border-radius:0 10px 10px 10px;padding:0.65rem 0.85rem;font-size:0.8rem;color:rgba(255,255,255,0.65);max-width:78%;line-height:1.5;">
+                  Fine. But if it doesn't match, I'm done.
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Score feedback bar -->
+            <div style="display:flex; gap:0.6rem; align-items:center; background:#141414; border:1px solid rgba(255,255,255,0.05); border-radius:8px; padding:0.55rem 0.8rem;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0;"></div>
+              <span style="font-size:0.7rem; color:rgba(255,255,255,0.35);">Good reframe — close bar +8% · Keep going</span>
+            </div>
+
+            <!-- Input bar -->
+            <div style="display:flex; gap:0.6rem; align-items:center; background:#141414; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.55rem 0.8rem;">
+              <span style="font-size:0.8rem; color:rgba(255,255,255,0.2); flex:1;">Your response...</span>
+              <div style="width:28px;height:28px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Caption -->
+        <p style="text-align:center; color:rgba(255,255,255,0.25); font-size:0.72rem; margin-top:0.8rem; letter-spacing:0.04em;">Live app — try it directly</p>
+      </div>
+
+    </div>
   </div>
-</section>
+</div>
 
 <div class="divider"></div>
 
 <!-- VENTURES -->
 <section id="ventures">
   <div class="section-tag">The journey</div>
-  <h2 class="section-title">What I built &<br>what I learned</h2>
-  <p class="section-sub">Each venture failed in its own way. Each one taught me something the next one needed.</p>
+  <h2 class="section-title">What I built &<br>what I can do for you</h2>
+  <p class="section-sub">2 years, 4 ventures. I know GHL, paid ads, web design, and local SEO. Not from courses. From doing it for actual clients.</p>
 
   <div class="ventures-grid">
 
     <div class="venture-card reveal" style="position:relative; overflow:hidden;">
-      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:3rem; font-weight:800; color:rgba(249,115,22,0.07); line-height:1; pointer-events:none; user-select:none;">01</div>
+      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:5rem; font-weight:800; color:rgba(249,115,22,0.06); line-height:1; pointer-events:none; user-select:none;">01</div>
       <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
         <div style="width:36px; height:36px; background:rgba(249,115,22,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
         </div>
         <div class="venture-title" style="margin:0;">Website Subscription Agency</div>
       </div>
-      <p class="venture-desc">Built 10+ websites for local businesses and ecom brands on Shopify and GoHighLevel. Sold them as monthly subscriptions instead of one-off projects.</p>
-      <div class="venture-lesson"><strong>Learned:</strong> What good design and copy actually means. How to manage real clients.</div>
+      <p class="venture-desc">Built 10+ websites for local businesses and ecom brands on Shopify and GoHighLevel. Managed clients, handled revisions, and shipped on time.</p>
+      <div class="venture-lesson"><strong>What I bring:</strong> I scope it, build it, deliver it. You don't have to babysit me.</div>
       <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
         <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Shopify</span>
         <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">GoHighLevel</span>
@@ -624,15 +821,15 @@
     </div>
 
     <div class="venture-card reveal reveal-delay-1" style="position:relative; overflow:hidden;">
-      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:3rem; font-weight:800; color:rgba(249,115,22,0.07); line-height:1; pointer-events:none; user-select:none;">02</div>
+      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:5rem; font-weight:800; color:rgba(249,115,22,0.06); line-height:1; pointer-events:none; user-select:none;">02</div>
       <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
         <div style="width:36px; height:36px; background:rgba(249,115,22,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         </div>
         <div class="venture-title" style="margin:0;">GHL Services Agency</div>
       </div>
-      <p class="venture-desc">Learned GoHighLevel from scratch and built automations, pipelines, and missed call text-back systems for small businesses. Made YouTube tutorials while learning.</p>
-      <div class="venture-lesson"><strong>Learned:</strong> CRMs, automation, the technical side of marketing. One video hit 6,800 organic views.</div>
+      <p class="venture-desc">Went deep on GoHighLevel and built automations, pipelines, and missed call text-back flows for small business clients. Made YouTube tutorials on the side. One hit 6,800 organic views.</p>
+      <div class="venture-lesson"><strong>What I bring:</strong> Full GHL builds: automations, pipelines, missed-call flows. Delivered to real clients, not just practised in a sandbox.</div>
       <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
         <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">GoHighLevel</span>
         <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Automation</span>
@@ -641,7 +838,7 @@
     </div>
 
     <div class="venture-card reveal reveal-delay-2" style="position:relative; overflow:hidden;">
-      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:3rem; font-weight:800; color:rgba(249,115,22,0.07); line-height:1; pointer-events:none; user-select:none;">03</div>
+      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:5rem; font-weight:800; color:rgba(249,115,22,0.06); line-height:1; pointer-events:none; user-select:none;">03</div>
       <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
         <div style="width:36px; height:36px; background:rgba(249,115,22,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
@@ -649,7 +846,7 @@
         <div class="venture-title" style="margin:0;">Ecom Brand — LuxoraBloom</div>
       </div>
       <p class="venture-desc">Launched a beauty ecom brand. Ran TikTok and Meta ad campaigns, tested 300+ creatives, generated 1.8M+ impressions at €2.08 avg CPM.</p>
-      <div class="venture-lesson"><strong>Learned:</strong> Paid ads, hooks, creative testing, audiences. How to lose money efficiently.</div>
+      <div class="venture-lesson"><strong>What I bring:</strong> I write hooks, build creatives, read the numbers, and cut what's not working. 300 creatives and 1.8M impressions is a lot of reps.</div>
       <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
         <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">TikTok Ads</span>
         <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Meta Ads</span>
@@ -659,7 +856,7 @@
 
     <div class="venture-card reveal reveal-delay-3" style="position:relative; overflow:hidden; border-color: rgba(249,115,22,0.25);">
       <div style="position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, #f97316, #fb923c);"></div>
-      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:3rem; font-weight:800; color:rgba(249,115,22,0.07); line-height:1; pointer-events:none; user-select:none;">04</div>
+      <div style="position:absolute; top:1.2rem; right:1.2rem; font-family:'Plus Jakarta Sans',sans-serif; font-size:5rem; font-weight:800; color:rgba(249,115,22,0.06); line-height:1; pointer-events:none; user-select:none;">04</div>
       <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem;">
         <div style="width:36px; height:36px; background:rgba(249,115,22,0.15); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -670,7 +867,7 @@
         </div>
       </div>
       <p class="venture-desc">Local SEO agency targeting UK service businesses. Cold calling, branded audit reports, follow-up sequences, and full service delivery.</p>
-      <div class="venture-lesson"><strong>Learned:</strong> Lead magnets, follow-ups, the full sales cycle. Currently active.</div>
+      <div class="venture-lesson"><strong>What I bring:</strong> I've run the whole cycle solo: prospecting, audits, follow-ups, execution. I know what it actually takes to close a client and deliver the work.</div>
       <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
         <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Local SEO</span>
         <span style="background:var(--surface2); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; color:var(--muted); font-weight:500;">Cold Calling</span>
@@ -690,7 +887,7 @@
   <p class="section-sub">Not claims. Actual work you can see, watch, and click through.</p>
 
   <!-- WEBSITES -->
-  <h3 style="font-size:1rem; font-weight:700; margin-bottom:1.2rem; color:var(--text);">Websites</h3>
+  <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:1.2rem; color:var(--text);">Websites</h3>
   <div class="proof-grid" style="margin-bottom:3rem;">
     <div class="proof-card reveal" style="overflow:hidden;" onclick="openModal('https://novogrowthagency.com/')">
       <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a14a48d3c3aed7c63c28e3b.png" style="width:100%; height:140px; object-fit:cover; object-position:top; display:block; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
@@ -711,7 +908,7 @@
   </div>
 
   <!-- AD CREATIVES -->
-  <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.4rem; color:var(--text);">Ad Creatives</h3>
+  <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:0.4rem; color:var(--text);">Ad Creatives</h3>
   <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1.2rem;">TikTok ads — 1.8M+ impressions · €2.08 avg CPM · 300+ creatives tested</p>
   <!-- Desktop grid / Mobile horizontal scroll -->
   <div class="ads-desktop" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:1rem; margin-bottom:5rem;">
@@ -734,7 +931,7 @@
 
     <!-- YouTube -->
     <div>
-      <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:var(--text);">YouTube Tutorial — 6,800+ organic views</h3>
+      <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:1rem; color:var(--text);">YouTube Tutorial — 6,800+ organic views</h3>
       <div style="border-radius:12px; overflow:hidden; border:1px solid var(--border); cursor:pointer;" onclick="window.open('https://youtu.be/X9TQcF4OwCw', '_blank')">
         <div style="position:relative;">
           <img src="https://img.youtube.com/vi/X9TQcF4OwCw/maxresdefault.jpg" alt="YouTube Tutorial" style="width:100%; display:block;">
@@ -752,7 +949,7 @@
 
     <!-- Audit -->
     <div>
-      <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:var(--text);">Local SEO Audit Sample</h3>
+      <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:1rem; color:var(--text);">Local SEO Audit Sample</h3>
       <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.8rem; height:100%; display:flex; flex-direction:column; justify-content:space-between; gap:1.5rem;">
         <div>
           <p style="font-weight:700; font-size:1rem; margin-bottom:0.4rem;">Local Search Audit — Sonic Cleaning</p>
@@ -772,7 +969,7 @@
   </div>
 
   <!-- ARTICLES -->
-  <h3 style="font-size:1rem; font-weight:700; margin-bottom:1.2rem; margin-top:2rem; color:var(--text);">Local SEO Articles</h3>
+  <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:1.2rem; margin-top:2rem; color:var(--text);">Local SEO Articles</h3>
   <div class="articles-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1.2rem;">
 
     <div onclick="openModal('https://novogrowthagency.com/they-find-you-but-call-your-competitor')" style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; cursor:pointer; transition: border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='rgba(249,115,22,0.4)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor=''; this.style.transform=''">
@@ -821,6 +1018,17 @@
 
   </div>
 </section>
+
+<!-- BOTTOM CTA -->
+<div style="background:var(--text); padding:4rem 2rem; text-align:center;">
+  <p style="color:rgba(255,255,255,0.5); font-size:0.8rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1rem;">Ready to talk?</p>
+  <h2 style="color:white; font-size:clamp(1.8rem, 3vw, 2.4rem); font-weight:800; letter-spacing:-0.01em; margin-bottom:0.8rem;">I'm available now.<br><span style="color:var(--accent);">Let's talk.</span></h2>
+  <p style="color:rgba(255,255,255,0.55); font-size:1rem; max-width:480px; margin:0 auto 2rem;">You need someone who starts Monday. Knows the tools. Gets client work done without six weeks of onboarding. That's me.</p>
+  <div style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;">
+    <a href="mailto:amrouche921@gmail.com" style="background:var(--accent); color:white; padding:0.85rem 2rem; border-radius:100px; font-size:0.95rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem; transition:background 0.2s;" onmouseover="this.style.background='#ea6c0a'" onmouseout="this.style.background='#f97316'">✉️ Email me</a>
+    <a href="https://wa.me/33743576388" target="_blank" style="background:rgba(255,255,255,0.1); color:white; padding:0.85rem 2rem; border-radius:100px; font-size:0.95rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem; border:1px solid rgba(255,255,255,0.15); transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">💬 WhatsApp</a>
+  </div>
+</div>
 
 <footer>
   <p>Zakaria Amrouche · Vienna, Austria</p>
@@ -883,6 +1091,24 @@ document.getElementById('siteModal').addEventListener('click', function(e) { if(
 document.getElementById('auditModal').addEventListener('click', function(e) { if(e.target===this) closeAudit(); });
 </script>
 
+<script>
+// CloserAI close bar animation — cycles between 55% and 78%
+(function() {
+  var bar = document.getElementById('closeBar');
+  var pct = document.getElementById('closeBarPct');
+  if (!bar || !pct) return;
+  var values = [62, 70, 58, 78, 65, 72];
+  var i = 0;
+  function tick() {
+    i = (i + 1) % values.length;
+    var v = values[i];
+    bar.style.width = v + '%';
+    pct.textContent = v + '%';
+  }
+  setInterval(tick, 2200);
+})();
+</script>
+
 
 <script>
 // On mobile, replace ads grid with horizontal scroll
@@ -892,11 +1118,11 @@ function initMobileAds() {
     if (!desktop) return;
     const videos = desktop.querySelectorAll('video');
     const srcs = Array.from(videos).map(v => v.src);
-    
+
     const scroll = document.createElement('div');
     scroll.className = 'ads-scroll-wrap';
     scroll.style.marginBottom = '4rem';
-    
+
     srcs.forEach(src => {
       const item = document.createElement('div');
       item.className = 'ad-item';
@@ -909,7 +1135,7 @@ function initMobileAds() {
       item.appendChild(vid);
       scroll.appendChild(item);
     });
-    
+
     desktop.replaceWith(scroll);
   }
 }
@@ -919,11 +1145,17 @@ window.addEventListener('resize', initMobileAds);
 
 
 <script>
-// ── Back to top ──
+// ── Back to top + nav shadow ──
 const backTop = document.getElementById('backTop');
+const nav = document.querySelector('nav');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 400) backTop.classList.add('visible');
   else backTop.classList.remove('visible');
+  if (window.scrollY > 20) {
+    nav.style.boxShadow = '0 4px 32px rgba(0,0,0,0.06)';
+  } else {
+    nav.style.boxShadow = 'none';
+  }
 });
 
 // ── Scroll progress bar ──
@@ -945,6 +1177,10 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 revealEls.forEach(el => observer.observe(el));
+// Fallback: force all reveals visible after 2s in case observer doesn't fire
+setTimeout(() => {
+  revealEls.forEach(el => el.classList.add('visible'));
+}, 2000);
 
 // ── Count-up for stats ──
 function countUp(el, target, duration) {
@@ -954,7 +1190,7 @@ function countUp(el, target, duration) {
     if (!start) start = timestamp;
     const progress = Math.min((timestamp - start) / duration, 1);
     const val = Math.floor(progress * target);
-    el.textContent = isDecimal ? (progress * target).toFixed(1) + 'M+' : 
+    el.textContent = isDecimal ? (progress * target).toFixed(1) + 'M+' :
                      target >= 1000000 ? (val/1000000).toFixed(1) + 'M+' :
                      val + (el.dataset.suffix || '');
     if (progress < 1) requestAnimationFrame(step);
