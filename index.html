@@ -349,6 +349,13 @@
     /* Ventures */
     .ventures-grid { grid-template-columns: 1fr; }
 
+    /* VSL section */
+    #vsl .vsl-inner { grid-template-columns: 1fr !important; gap: 2rem !important; }
+    #vsl .vsl-text { text-align: center; }
+    #vsl .vsl-text p { margin: 0 auto 2rem; }
+    #vsl .vsl-bullets { align-items: center; }
+    #vsl .vsl-video { justify-content: center; }
+
     /* Ads horizontal scroll */
     .ads-scroll-wrap {
       display: flex;
@@ -512,6 +519,7 @@
     <a href="#about">About</a>
     <a href="#ventures">Ventures</a>
     <a href="#work">Work</a>
+    <a href="#vsl">Video</a>
   </div>
   <div style="display:flex; justify-content:flex-end;">
     <a href="tel:+33743576388" style="background:var(--accent); color:white; padding:0.55rem 1.2rem; border-radius:100px; font-size:0.88rem; font-weight:600; text-decoration:none; display:flex; align-items:center; gap:0.4rem; transition: background 0.2s;" onmouseover="this.style.background='#ea6c0a'" onmouseout="this.style.background='#f97316'">📞 Call me</a>
@@ -549,6 +557,44 @@
     <div class="stat-label">Languages spoken</div>
   </div>
 </div>
+
+<div class="divider"></div>
+
+<!-- VSL -->
+<section id="vsl" style="padding: 4rem 2rem;">
+  <div class="vsl-inner" style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+    
+    <!-- Left — text -->
+    <div class="vsl-text">
+      <div class="section-tag">Video intro</div>
+      <h2 style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 1.2rem;">Hear it<br>from me.</h2>
+      <p style="color: var(--muted); font-size: 1rem; line-height: 1.8; margin-bottom: 2rem; max-width: 420px;">I made this video specifically for the people reading this. 90 seconds. No script. Just me talking about why I'm here and what I'm looking for.</p>
+      <div class="vsl-bullets" style="display: flex; flex-direction: column; gap: 0.8rem;">
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink:0;"></div>
+          <span style="font-size: 0.9rem; color: var(--muted);">Who I am and what I've built</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink:0;"></div>
+          <span style="font-size: 0.9rem; color: var(--muted);">Why I'm looking to join an agency</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink:0;"></div>
+          <span style="font-size: 0.9rem; color: var(--muted);">What I want to contribute</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right — video -->
+    <div class="vsl-video" style="display: flex; justify-content: center;">
+      <div style="position: relative; width: 100%; max-width: 449px;">
+        <div style="position: absolute; inset: -8px; border-radius: 20px; border: 2px solid rgba(249,115,22,0.2); pointer-events: none;"></div>
+        <video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a14a0c19b6d07a704aeb6b6.mp4" controls playsinline controlsList="nofullscreen" disablePictureInPicture style="width: 100%; border-radius: 14px; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.12);"></video>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <div class="divider"></div>
 
@@ -846,11 +892,11 @@ function initMobileAds() {
     if (!desktop) return;
     const videos = desktop.querySelectorAll('video');
     const srcs = Array.from(videos).map(v => v.src);
-
+    
     const scroll = document.createElement('div');
     scroll.className = 'ads-scroll-wrap';
     scroll.style.marginBottom = '4rem';
-
+    
     srcs.forEach(src => {
       const item = document.createElement('div');
       item.className = 'ad-item';
@@ -863,7 +909,7 @@ function initMobileAds() {
       item.appendChild(vid);
       scroll.appendChild(item);
     });
-
+    
     desktop.replaceWith(scroll);
   }
 }
@@ -908,7 +954,7 @@ function countUp(el, target, duration) {
     if (!start) start = timestamp;
     const progress = Math.min((timestamp - start) / duration, 1);
     const val = Math.floor(progress * target);
-    el.textContent = isDecimal ? (progress * target).toFixed(1) + 'M+' :
+    el.textContent = isDecimal ? (progress * target).toFixed(1) + 'M+' : 
                      target >= 1000000 ? (val/1000000).toFixed(1) + 'M+' :
                      val + (el.dataset.suffix || '');
     if (progress < 1) requestAnimationFrame(step);
