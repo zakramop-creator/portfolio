@@ -24,7 +24,7 @@
 <script defer src="/_vercel/insights/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #FBFAF7;
@@ -41,7 +41,10 @@
   html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 
   body {
-    background: var(--bg);
+    background:
+      radial-gradient(1100px 560px at 82% -8%, rgba(200,80,26,0.07), transparent 62%),
+      radial-gradient(900px 500px at -10% 30%, rgba(200,80,26,0.04), transparent 55%),
+      var(--bg);
     color: var(--ink);
     font-family: 'Hanken Grotesk', sans-serif;
     font-size: 16px;
@@ -49,7 +52,21 @@
     overflow-x: hidden;
   }
 
+  /* film grain over everything */
+  body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 3000; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    opacity: 0.05;
+  }
+
   ::selection { background: var(--accent); color: #fff; }
+
+  /* accent italics — the one display flourish */
+  .hero h1 em, .sec-title em, .cta h2 em, .latest h2 em {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 600;
+    color: var(--accent); letter-spacing: -0.01em;
+  }
 
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
 
@@ -86,11 +103,11 @@
   .btn-ghost:hover { border-color: var(--ink); }
 
   /* HERO */
-  .hero { padding: 9rem 0 4.5rem; max-width: 800px; opacity: 0; transform: translateY(26px); }
+  .hero { padding: 9rem 0 4.5rem; max-width: 880px; opacity: 0; transform: translateY(26px); }
   body.entered .hero { opacity: 1; transform: none; transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1); }
   .kicker { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.4rem; display: flex; align-items: center; gap: 0.5rem; }
   .kicker .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
-  .hero h1 { font-size: clamp(2.6rem, 5.2vw, 4.3rem); margin-bottom: 1.6rem; }
+  .hero h1 { font-size: clamp(2.7rem, 5.2vw, 4.4rem); line-height: 1.04; margin-bottom: 1.6rem; }
   .hero-desc { font-size: 1.08rem; color: var(--muted); max-width: 580px; margin: 0 0 2.2rem; line-height: 1.7; }
   .hero-ctas { display: flex; gap: 0.8rem; flex-wrap: wrap; }
   .hero-id { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.8rem; }
@@ -100,8 +117,19 @@
 
   /* STATS */
   .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 2.6rem 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-  .stat-num { font-family: 'Hanken Grotesk', sans-serif; font-weight: 800; font-size: 2.8rem; letter-spacing: -0.03em; line-height: 1; }
+  .stat-num { font-family: 'Hanken Grotesk', sans-serif; font-weight: 800; font-size: 3rem; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .stat-num .sfx { color: inherit; }
   .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; letter-spacing: 0.02em; }
+
+  /* SKILLS MARQUEE */
+  .marquee { overflow: hidden; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+  .marquee-track { display: flex; width: max-content; animation: mq 26s linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .mq-set { display: flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem; }
+  .mq-item { font-weight: 800; font-size: 1.5rem; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px rgba(22,20,15,0.4); }
+  .mq-item.solid { color: var(--accent); -webkit-text-stroke: 0; }
+  .mq-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* SECTIONS */
   section { padding: 8rem 0; }
@@ -113,9 +141,12 @@
 
   /* VENTURES */
   .ventures-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
-  .venture { position: relative; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 2rem; transition: border-color 0.25s, transform 0.25s; }
-  .venture:hover { border-color: rgba(22,20,15,0.28); transform: translateY(-3px); }
-  .venture-idx { position: absolute; top: 1.6rem; right: 1.8rem; font-family: 'Hanken Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--muted); opacity: 0.5; }
+  .venture { position: relative; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 2rem; transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; overflow: hidden; }
+  .venture::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+  .venture:hover { border-color: rgba(22,20,15,0.28); transform: translateY(-4px); box-shadow: 0 18px 40px rgba(22,20,15,0.09); }
+  .venture:hover::before { transform: scaleX(1); }
+  .venture-idx { position: absolute; top: 1rem; right: 1.3rem; font-family: 'Hanken Grotesk', sans-serif; font-weight: 800; font-size: 3.4rem; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(22,20,15,0.16); transition: -webkit-text-stroke-color 0.25s; }
+  .venture:hover .venture-idx { -webkit-text-stroke-color: var(--accent); }
   .venture h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.8rem; }
   .venture-desc { font-size: 0.94rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.2rem; }
   .venture-bring { font-size: 0.9rem; color: var(--ink); border-left: 2px solid var(--accent); padding: 0.3rem 0 0.3rem 0.9rem; margin-bottom: 1.2rem; }
@@ -129,9 +160,10 @@
   .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
 
-  .proof { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; cursor: pointer; transition: border-color 0.2s, transform 0.2s; }
-  .proof:hover { border-color: rgba(22,20,15,0.28); transform: translateY(-2px); }
-  .proof img { width: 100%; height: 140px; object-fit: cover; object-position: top; display: block; }
+  .proof { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; cursor: pointer; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+  .proof:hover { border-color: rgba(22,20,15,0.28); transform: translateY(-3px); box-shadow: 0 14px 32px rgba(22,20,15,0.09); }
+  .proof img { width: 100%; height: 140px; object-fit: cover; object-position: top; display: block; transition: transform 0.45s cubic-bezier(0.16,1,0.3,1); }
+  .proof:hover img { transform: scale(1.05); }
   .proof-body { padding: 0.9rem 1rem; }
   .proof-title { font-weight: 600; font-size: 0.9rem; }
   .proof-sub { font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }
@@ -173,26 +205,33 @@
   .pill { background: var(--bg); border: 1px solid var(--line); border-radius: 100px; padding: 0.2rem 0.65rem; font-size: 0.72rem; color: var(--muted); font-weight: 500; }
 
   /* App mockup (dark — the product's own UI) */
-  .mock { border-radius: 10px; overflow: hidden; border: 1px solid rgba(0,0,0,0.12); box-shadow: 0 24px 60px rgba(22,20,15,0.14); }
+  .mock { border-radius: 10px; overflow: hidden; border: 1px solid rgba(0,0,0,0.12); box-shadow: 0 24px 60px rgba(22,20,15,0.14); transform: rotate(-1.4deg); transition: transform 0.45s cubic-bezier(0.16,1,0.3,1); }
+  .mock:hover { transform: rotate(0deg); }
   .mock-chrome { background: #1c1c1c; padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
   .mock-dots { display: flex; gap: 5px; }
   .mock-dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
   .mock-url { flex: 1; background: rgba(255,255,255,0.07); border-radius: 6px; padding: 4px 10px; font-size: 0.72rem; color: rgba(255,255,255,0.4); }
   .mock-app { background: #0a0a0a; height: 460px; display: flex; flex-direction: column; padding: 1.4rem; gap: 1rem; }
 
-  /* BOTTOM CTA */
-  .cta { padding: 6.5rem 0; text-align: center; }
+  /* BOTTOM CTA — dark closing band */
+  .cta-band { background: var(--ink); position: relative; overflow: hidden; }
+  .cta-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(800px 400px at 50% 120%, rgba(200,80,26,0.22), transparent 65%); pointer-events: none; }
+  .cta { padding: 7rem 0; text-align: center; position: relative; }
   .cta .kick { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
-  .cta h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
-  .cta p { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+  .cta h2 { font-size: clamp(2.2rem, 4.4vw, 3.4rem); margin-bottom: 1rem; color: var(--bg); }
+  .cta p { color: rgba(251,250,247,0.6); font-size: 1.05rem; max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
   .cta-btns { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+  .cta-band .btn-primary { background: var(--accent); color: #fff; }
+  .cta-band .btn-primary:hover { background: #E2601F; }
+  .cta-band .btn-ghost { color: var(--bg); border-color: rgba(251,250,247,0.3); }
+  .cta-band .btn-ghost:hover { border-color: var(--bg); }
 
-  footer { border-top: 1px solid var(--line); padding: 2.5rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; }
+  footer { background: var(--ink); border-top: 1px solid rgba(251,250,247,0.1); padding: 2.5rem 0; text-align: center; color: rgba(251,250,247,0.45); font-size: 0.85rem; position: relative; }
 
   /* FLOAT */
   .float { position: fixed; z-index: 999; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.2rem; border-radius: 100px; font-family: 'Hanken Grotesk', sans-serif; font-size: 0.88rem; font-weight: 600; text-decoration: none; box-shadow: 0 6px 22px rgba(22,20,15,0.16); transition: transform 0.15s; }
   .float:hover { transform: translateY(-2px); }
-  .float-wa { bottom: 1.4rem; left: 1.4rem; background: var(--ink); color: var(--bg); }
+  .float-wa { bottom: 1.4rem; left: 1.4rem; background: var(--ink); color: var(--bg); border: 1px solid rgba(251,250,247,0.25); }
   .float-em { bottom: 1.4rem; right: 1.4rem; background: var(--accent); color: #fff; }
 
   .back-top { position: fixed; bottom: 5rem; right: 1.4rem; width: 42px; height: 42px; background: var(--ink); color: var(--bg); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 998; opacity: 0; transform: translateY(8px); transition: opacity 0.3s, transform 0.3s; }
@@ -211,47 +250,6 @@
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* INTRO — small door opening onto the room (3D) */
-  #intro { position: fixed; inset: 0; z-index: 2000; overflow: hidden; }
-  #intro.hidden { display: none; }
-  /* subtle camera push-in toward the doorway */
-  .stage { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 2.6s cubic-bezier(0.62,0.01,0.2,1); }
-  #intro.open .stage { transform: scale(1.16); }
-  /* wall + frame — fades in sync with the doors opening */
-  .wall { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 90vw; height: 88vh; box-shadow: 0 0 0 9999px #D9D2C5; outline: 6px solid #C7BEAC; border-radius: 3px; transition: opacity 2.4s ease; }
-  #intro.open .wall { opacity: 0; }
-  /* door frame ~90% of screen */
-  .doorway { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 90vw; height: 88vh; perspective: 1100px; perspective-origin: 50% 45%; transform-style: preserve-3d; }
-  .door { position: absolute; top: 0; bottom: 0; width: 50.5%; background: linear-gradient(155deg, #FCFAF6 0%, #EBE4D6 100%); transition: transform 2.6s cubic-bezier(0.62,0.01,0.2,1), filter 2.6s ease; transform-style: preserve-3d; }
-  .door-l { left: 0; transform-origin: left center; box-shadow: inset -16px 0 30px -16px rgba(70,52,28,0.3); }
-  .door-r { right: 0; transform-origin: right center; box-shadow: inset 16px 0 30px -16px rgba(70,52,28,0.3); transition-delay: 0.09s; }
-  /* door thickness — the side edge that turns into view during the 3D swing */
-  .door::before { content: ''; position: absolute; top: 0; bottom: 0; width: 38px; background: linear-gradient(90deg, #3a2b19, #1a1209); backface-visibility: visible; }
-  .door-l::before { right: 0; transform-origin: right center; transform: rotateY(-90deg); }
-  .door-r::before { left: 0; transform-origin: left center; transform: rotateY(90deg); }
-  .door-l::after, .door-r::after { content: ''; position: absolute; top: 50%; width: 6px; height: 48px; background: var(--accent); border-radius: 4px; transform: translateY(-50%); opacity: 0.9; }
-  .door-l::after { right: 9px; }
-  .door-r::after { left: 9px; }
-  #intro.open .door-l { transform: rotateY(-100deg); filter: brightness(0.82); }
-  #intro.open .door-r { transform: rotateY(100deg); filter: brightness(0.82); }
-  .intro-content { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
-  .intro-top { position: absolute; left: 0; right: 0; bottom: 50%; padding-bottom: 2.4rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
-  .intro-bottom { position: absolute; left: 0; right: 0; top: 50%; padding-top: 1.3rem; text-align: center; }
-  .intro-photo { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: center top; border: 3px solid #fff; box-shadow: 0 12px 34px rgba(70,52,28,0.2); margin-bottom: 0.8rem; }
-  .intro-name { color: var(--muted); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
-  .intro-welcome { color: var(--ink); font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0.35rem 0 0; }
-  .intro-sub { color: var(--ink); font-size: clamp(1.4rem, 2.8vw, 1.8rem); font-weight: 600; letter-spacing: -0.01em; }
-  /* content tumbles all the way off-screen as the doors open */
-  @keyframes fall {
-    0%  { transform: translateY(0) rotate(0deg); opacity: 1; }
-    12% { opacity: 1; }
-    100% { transform: translateY(135vh) rotate(var(--rot, 8deg)); opacity: 0; }
-  }
-  #intro.open .intro-photo   { animation: fall 1.7s cubic-bezier(0.4,0,0.9,0.32) 0s    forwards; --rot: -18deg; }
-  #intro.open .intro-name    { animation: fall 1.7s cubic-bezier(0.4,0,0.9,0.32) 0.08s forwards; --rot: 12deg; }
-  #intro.open .intro-welcome { animation: fall 1.7s cubic-bezier(0.4,0,0.9,0.32) 0.15s forwards; --rot: -10deg; }
-  #intro.open .intro-sub     { animation: fall 1.7s cubic-bezier(0.4,0,0.9,0.32) 0.1s  forwards; --rot: 14deg; }
-
   @media (max-width: 820px) {
     .wrap { padding: 0 1.3rem; }
     .nav-inner { padding: 1rem 1.3rem; }
@@ -259,6 +257,8 @@
     .hero { padding: 7rem 0 3rem; }
     .stats { grid-template-columns: 1fr 1fr; gap: 1.6rem; padding: 2rem 0; }
     .stat-num { font-size: 2.2rem; }
+    .mq-item { font-size: 1.1rem; }
+    .mq-set { gap: 1.6rem; padding-right: 1.6rem; }
     section { padding: 5rem 0; }
     .latest { padding: 5rem 0; }
     .ventures-grid { grid-template-columns: 1fr; }
@@ -278,36 +278,14 @@
 </head>
 <body>
 
-<!-- INTRO / DOOR -->
-<div id="intro">
-  <div class="stage">
-    <div class="wall"></div>
-    <div class="doorway">
-      <div class="door door-l"></div>
-      <div class="door door-r"></div>
-    </div>
-  </div>
-  <div class="intro-content">
-    <div class="intro-top">
-      <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12ea50e05851175c64d6c2.png" alt="Zakaria Amrouche" class="intro-photo">
-      <div class="intro-name">Zakaria Amrouche</div>
-      <h1 class="intro-welcome">Welcome.</h1>
-    </div>
-    <div class="intro-bottom">
-      <p class="intro-sub">Thanks for taking the time.</p>
-    </div>
-  </div>
-</div>
-<script>document.body.style.overflow='hidden';</script>
-
 <nav id="nav">
   <div class="nav-inner">
     <a href="#top" class="nav-logo">Zakaria Amrouche</a>
     <div class="nav-right">
       <div class="nav-links">
         <a href="#about">About</a>
-        <a href="#ventures">Ventures</a>
         <a href="#work">Work</a>
+        <a href="#ventures">Ventures</a>
       </div>
       <a href="mailto:zak@whyhirezak.com" class="nav-cta">Email me</a>
     </div>
@@ -318,8 +296,8 @@
 <div class="wrap" id="top">
   <section class="hero" id="about" style="padding-top:9rem;">
     <div class="kicker"><span class="dot"></span> Looking for an agency role · Open to full-time or freelance</div>
-    <h1>Ran the whole stack solo. Here to plug into your team.</h1>
-    <p class="hero-desc">Zakaria, 21. Spent two years teaching myself the full agency stack — GHL, paid ads, web design, local SEO — by building real projects and putting in the reps. Looking to join an agency, full-time or freelance. Remote, based in Vienna (CET), easy overlap with UK hours. No hand-holding needed.</p>
+    <h1>Ran the whole stack <em>solo</em>. Here to plug into <em>your team</em>.</h1>
+    <p class="hero-desc">Zakaria, 21. Spent two years teaching myself the full agency stack — GHL, paid ads, web design, local SEO — by building real projects and putting in the reps. Comfortable on the phone too: I've done my share of cold calls. Looking to join an agency, full-time or freelance. Remote, based in Vienna (CET), easy overlap with UK hours. No hand-holding needed.</p>
     <div class="hero-ctas">
       <a href="mailto:zak@whyhirezak.com" class="btn btn-primary">Email me</a>
       <a href="https://wa.me/33743576388" target="_blank" class="btn btn-ghost">WhatsApp</a>
@@ -330,63 +308,47 @@
 <!-- STATS -->
 <div class="wrap">
   <div class="stats">
-    <div class="reveal"><div class="stat-num">10+</div><div class="stat-label">Websites built</div></div>
-    <div class="reveal"><div class="stat-num">1.8M+</div><div class="stat-label">Ad impressions generated</div></div>
-    <div class="reveal"><div class="stat-num">300+</div><div class="stat-label">Ad creatives tested</div></div>
-    <div class="reveal"><div class="stat-num">2</div><div class="stat-label">Years hands-on</div></div>
+    <div class="reveal"><div class="stat-num"><span class="cnt" data-n="10">10</span><span class="sfx">+</span></div><div class="stat-label">Websites built</div></div>
+    <div class="reveal"><div class="stat-num"><span class="cnt" data-n="1.8">1.8</span><span class="sfx">M+</span></div><div class="stat-label">Ad impressions generated</div></div>
+    <div class="reveal"><div class="stat-num"><span class="cnt" data-n="300">300</span><span class="sfx">+</span></div><div class="stat-label">Ad creatives tested</div></div>
+    <div class="reveal"><div class="stat-num"><span class="sfx">€</span><span class="cnt" data-n="2.08">2.08</span></div><div class="stat-label">Avg CPM on TikTok ads</div></div>
   </div>
 </div>
 
-<!-- VENTURES -->
-<div class="band">
-<div class="wrap">
-  <section id="ventures">
-    <div class="sec-kicker">The journey</div>
-    <h2 class="sec-title">What I built &amp; what I can do for you</h2>
-    <p class="sec-sub">Two years, four ventures. I know GHL, paid ads, web design, and local SEO. Not from courses. From doing it for actual clients.</p>
-
-    <div class="ventures-grid">
-      <div class="venture reveal">
-        <div class="venture-idx">01</div>
-        <h3>Website Subscription Agency</h3>
-        <p class="venture-desc">Built 10+ websites for local businesses and ecom brands on Shopify and GoHighLevel. Handled briefs, revisions, shipped on time.</p>
-        <div class="venture-bring"><strong>What I bring:</strong> I scope it, build it, deliver it. You don't have to babysit me.</div>
-        <div class="tags"><span class="tag">Shopify</span><span class="tag">GoHighLevel</span><span class="tag">Web Design</span></div>
-      </div>
-
-      <div class="venture reveal">
-        <div class="venture-idx">02</div>
-        <h3>GHL Services Agency</h3>
-        <p class="venture-desc">Went deep on GoHighLevel and built automations, pipelines, and missed call text-back flows for local businesses. Made YouTube tutorials on the side. One hit 6,800 organic views.</p>
-        <div class="venture-bring"><strong>What I bring:</strong> Full GHL builds: automations, pipelines, missed-call flows. Delivered to real clients, not just practised in a sandbox.</div>
-        <div class="tags"><span class="tag">GoHighLevel</span><span class="tag">Automation</span><span class="tag">YouTube</span></div>
-      </div>
-
-      <div class="venture reveal">
-        <div class="venture-idx">03</div>
-        <h3>Ecom Brand — LuxoraBloom</h3>
-        <p class="venture-desc">Launched a beauty ecom brand. Ran TikTok and Meta ad campaigns, tested 300+ creatives, generated 1.8M+ impressions at €2.08 avg CPM.</p>
-        <div class="venture-bring"><strong>What I bring:</strong> I write hooks, build creatives, read the numbers, and cut what's not working. 300 creatives and 1.8M impressions is a lot of reps.</div>
-        <div class="tags"><span class="tag">TikTok Ads</span><span class="tag">Meta Ads</span><span class="tag">Ecom</span></div>
-      </div>
-
-      <div class="venture reveal">
-        <div class="venture-idx">04</div>
-        <h3>Novo Growth Agency</h3>
-        <p class="venture-desc">Built a local SEO agency targeting UK service businesses. Cold calling, branded audit reports, follow-up sequences, and full service delivery.</p>
-        <div class="venture-bring"><strong>What I bring:</strong> I ran the whole cycle solo: prospecting, audits, follow-ups, execution. I know what it actually takes to close a client and deliver the work.</div>
-        <div class="tags"><span class="tag">Local SEO</span><span class="tag">Cold Calling</span><span class="tag">SEO Audits</span></div>
-      </div>
+<!-- SKILLS MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="mq-set">
+      <span class="mq-item">GoHighLevel</span><span class="mq-dot"></span>
+      <span class="mq-item solid">Paid Ads</span><span class="mq-dot"></span>
+      <span class="mq-item">Web Design</span><span class="mq-dot"></span>
+      <span class="mq-item solid">Local SEO</span><span class="mq-dot"></span>
+      <span class="mq-item">Cold Calling</span><span class="mq-dot"></span>
+      <span class="mq-item solid">Shopify</span><span class="mq-dot"></span>
+      <span class="mq-item">TikTok Ads</span><span class="mq-dot"></span>
+      <span class="mq-item solid">Meta Ads</span><span class="mq-dot"></span>
+      <span class="mq-item">Automation</span><span class="mq-dot"></span>
     </div>
-  </section>
-</div>
+    <div class="mq-set">
+      <span class="mq-item">GoHighLevel</span><span class="mq-dot"></span>
+      <span class="mq-item solid">Paid Ads</span><span class="mq-dot"></span>
+      <span class="mq-item">Web Design</span><span class="mq-dot"></span>
+      <span class="mq-item solid">Local SEO</span><span class="mq-dot"></span>
+      <span class="mq-item">Cold Calling</span><span class="mq-dot"></span>
+      <span class="mq-item solid">Shopify</span><span class="mq-dot"></span>
+      <span class="mq-item">TikTok Ads</span><span class="mq-dot"></span>
+      <span class="mq-item solid">Meta Ads</span><span class="mq-dot"></span>
+      <span class="mq-item">Automation</span><span class="mq-dot"></span>
+    </div>
+  </div>
 </div>
 
 <!-- WORK & PROOF -->
+<div class="band">
 <div class="wrap">
   <section id="work">
     <div class="sec-kicker">Work &amp; proof</div>
-    <h2 class="sec-title">Some of my work</h2>
+    <h2 class="sec-title">Some of my <em>work</em></h2>
     <p class="sec-sub">Not claims. Actual work you can see, watch, and click through.</p>
 
     <h3 class="work-h3">Websites</h3>
@@ -397,7 +359,7 @@
       </div>
       <div class="proof reveal" onclick="openModal('https://ukfreewebsite.co.uk/')">
         <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a14a48f9b6d07a704aef9ae.png" alt="UK Free Website">
-        <div class="proof-body"><p class="proof-title">UK Free Website</p><p class="proof-sub">Website subscription agency</p></div>
+        <div class="proof-body"><p class="proof-title">UK Free Website</p><p class="proof-sub">Website design agency</p></div>
       </div>
       <div class="proof reveal" onclick="openModal('https://designedbynovo.com/true-events')">
         <img src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a14a492069d64aa5d34017c.png" alt="True Events">
@@ -412,10 +374,10 @@
     <h3 class="work-h3" style="margin-bottom:0.3rem;">Ad Creatives</h3>
     <p class="work-note">TikTok ads — 1.8M+ impressions · €2.08 avg CPM · 300+ creatives tested</p>
     <div class="grid-4" id="adsGrid" style="margin-bottom:5rem;">
-      <div class="vid"><video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33c6cc0eead5cc0e234.mp4" controls playsinline></video></div>
-      <div class="vid"><video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33c3c3aed7c63a5a4ca.mp4" controls playsinline></video></div>
-      <div class="vid"><video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33cfe2210f89e6129e7.mp4" controls playsinline></video></div>
-      <div class="vid"><video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33c6cc0eead5cc0e235.mp4" controls playsinline></video></div>
+      <div class="vid"><video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33c6cc0eead5cc0e234.mp4#t=0.1" preload="metadata" controls playsinline></video></div>
+      <div class="vid"><video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33c3c3aed7c63a5a4ca.mp4#t=0.1" preload="metadata" controls playsinline></video></div>
+      <div class="vid"><video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33cfe2210f89e6129e7.mp4#t=0.1" preload="metadata" controls playsinline></video></div>
+      <div class="vid"><video src="https://assets.cdn.filesafe.space/ybRpcDN1gPobQwmp9F4Q/media/6a12e33c6cc0eead5cc0e235.mp4#t=0.1" preload="metadata" controls playsinline></video></div>
     </div>
 
     <div class="grid-2" style="margin-bottom:3rem;">
@@ -490,6 +452,50 @@
     </div>
   </section>
 </div>
+</div>
+
+<!-- VENTURES -->
+<div class="wrap">
+  <section id="ventures">
+    <div class="sec-kicker">The journey</div>
+    <h2 class="sec-title">What I <em>built</em> &amp; what I can do for you</h2>
+    <p class="sec-sub">Two years, four ventures. I know GHL, paid ads, web design, and local SEO. Not from courses. From doing it for actual clients.</p>
+
+    <div class="ventures-grid">
+      <div class="venture reveal">
+        <div class="venture-idx">01</div>
+        <h3>Website Design Agency</h3>
+        <p class="venture-desc">Built 10+ websites for local businesses and ecom brands on Shopify and GoHighLevel. Handled briefs, revisions, shipped on time.</p>
+        <div class="venture-bring"><strong>What I bring:</strong> I scope it, build it, deliver it. You don't have to babysit me.</div>
+        <div class="tags"><span class="tag">Shopify</span><span class="tag">GoHighLevel</span><span class="tag">Web Design</span></div>
+      </div>
+
+      <div class="venture reveal">
+        <div class="venture-idx">02</div>
+        <h3>GHL Services Agency</h3>
+        <p class="venture-desc">Went deep on GoHighLevel and built automations, pipelines, and missed call text-back flows for local businesses. Made YouTube tutorials on the side. One hit 6,800 organic views.</p>
+        <div class="venture-bring"><strong>What I bring:</strong> Full GHL builds: automations, pipelines, missed-call flows. Delivered to real clients, not just practised in a sandbox.</div>
+        <div class="tags"><span class="tag">GoHighLevel</span><span class="tag">Automation</span><span class="tag">YouTube</span></div>
+      </div>
+
+      <div class="venture reveal">
+        <div class="venture-idx">03</div>
+        <h3>Ecom Brand — LuxoraBloom</h3>
+        <p class="venture-desc">Launched a beauty ecom brand. Ran TikTok and Meta ad campaigns, tested 300+ creatives, generated 1.8M+ impressions at €2.08 avg CPM.</p>
+        <div class="venture-bring"><strong>What I bring:</strong> I write hooks, build creatives, read the numbers, and cut what's not working. 300 creatives and 1.8M impressions is a lot of reps.</div>
+        <div class="tags"><span class="tag">TikTok Ads</span><span class="tag">Meta Ads</span><span class="tag">Ecom</span></div>
+      </div>
+
+      <div class="venture reveal">
+        <div class="venture-idx">04</div>
+        <h3>Novo Growth Agency</h3>
+        <p class="venture-desc">Built a local SEO agency targeting UK service businesses. Cold calling, branded audit reports, follow-up sequences, and full service delivery.</p>
+        <div class="venture-bring"><strong>What I bring:</strong> I ran the whole cycle solo: prospecting, audits, follow-ups, execution. I know what it actually takes to close a client and deliver the work.</div>
+        <div class="tags"><span class="tag">Local SEO</span><span class="tag">Cold Calling</span><span class="tag">SEO Audits</span></div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <!-- LATEST WORK -->
 <div class="latest">
@@ -560,16 +566,18 @@
 </div>
 
 <!-- BOTTOM CTA -->
+<div class="cta-band">
 <div class="wrap">
   <section class="cta">
     <div class="kick">Ready to talk?</div>
-    <h2>I'm available now. Let's talk.</h2>
+    <h2>I'm available <em>now</em>. Let's talk.</h2>
     <p>You need someone who starts Monday. Knows the tools. Gets client work done without six weeks of onboarding. That's me.</p>
     <div class="cta-btns">
       <a href="mailto:zak@whyhirezak.com" class="btn btn-primary">Email me</a>
       <a href="https://wa.me/33743576388" target="_blank" class="btn btn-ghost">WhatsApp</a>
     </div>
   </section>
+</div>
 </div>
 
 <footer>
@@ -613,15 +621,7 @@
 </div>
 
 <script>
-function enterSite() {
-  var i = document.getElementById('intro');
-  if (!i || i.classList.contains('open')) return;
-  i.classList.add('open');                                  // doors swing + content falls + wall & light, all synced
-  setTimeout(function(){ document.body.classList.add('entered'); }, 900);  // hero flows in as doors finish
-  setTimeout(function(){ i.classList.add('hidden'); document.body.style.overflow=''; }, 2900);
-}
-// Doors swing open automatically after 1.4s
-setTimeout(enterSite, 1400);
+document.body.classList.add('entered');
 
 function openModal(url) {
   document.getElementById('modalFrame').src = url;
@@ -655,10 +655,34 @@ window.addEventListener('scroll', function(){
   if(window.scrollY > 400) backTop.classList.add('visible'); else backTop.classList.remove('visible');
 });
 
+// Stat count-up (markup already holds final values — animation only rewrites them)
+var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(el) {
+  if (reduceMotion || el.dataset.done) return;
+  el.dataset.done = '1';
+  var target = parseFloat(el.dataset.n);
+  var dec = (el.dataset.n.split('.')[1] || '').length;
+  var start = null, dur = 1100;
+  function tick(t) {
+    if (!start) start = t;
+    var p = Math.min((t - start) / dur, 1);
+    p = 1 - Math.pow(1 - p, 3);
+    el.textContent = (target * p).toFixed(dec);
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 // Reveal
 var revealEls = document.querySelectorAll('.reveal');
 var io = new IntersectionObserver(function(entries){
-  entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); } });
+  entries.forEach(function(en){
+    if(en.isIntersecting){
+      en.target.classList.add('visible');
+      en.target.querySelectorAll('.cnt').forEach(countUp);
+      io.unobserve(en.target);
+    }
+  });
 }, { threshold: 0.12 });
 revealEls.forEach(function(el){ io.observe(el); });
 setTimeout(function(){ revealEls.forEach(function(el){ el.classList.add('visible'); }); document.body.classList.add('entered'); }, 1800);
